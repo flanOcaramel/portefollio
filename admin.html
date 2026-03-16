@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Portfolio Admin</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Retour au Portfolio</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="admin-container">
+            <!-- Formulaire de connexion -->
+            <div id="login-section">
+                <h1>Connexion Admin</h1>
+                <p style="margin-bottom: 1rem; color: #666;">
+                </p>
+                <form class="login-form" id="login-form">
+                    <input type="password" id="password" placeholder="Mot de passe" required>
+                    <button type="submit">Se connecter</button>
+                </form>
+                <p id="login-error" class="error-message" style="display: none;">Mot de passe incorrect</p>
+            </div>
+
+            <!-- Panel Admin -->
+            <div id="admin-panel" class="admin-panel">
+                <div class="admin-header">
+                    <h1>Gestion des Projets</h1>
+                    <button class="btn-logout" id="logout-btn">Déconnexion</button>
+                </div>
+
+                <div id="message-container"></div>
+
+                <!-- Formulaire d'ajout de projet -->
+                <h2>Ajouter un projet</h2>
+                <form class="project-form" id="project-form">
+                    <input type="text" id="project-title" placeholder="Titre du projet" required>
+                    <input type="text" id="project-type" placeholder="Type (SLAM / Stage / Personnel)" required>
+                    <textarea id="project-description" placeholder="Description du projet" required></textarea>
+                    <textarea id="project-competences" placeholder="Compétences utilisées (séparées par des virgules)" required></textarea>
+                    
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Compte rendu PDF (optionnel)</label>
+                    <input type="file" id="project-pdf" accept="application/pdf">
+                    <p style="font-size: 0.85rem; color: #666; margin-bottom: 1rem;">Ou cliquez ci-dessous pour saisir le compte rendu en texte:</p>
+                    <textarea id="project-compte-rendu" placeholder="Compte rendu du projet (si pas de PDF)"></textarea>
+                    <button type="submit">Ajouter le projet</button>
+                </form>
+
+                <!-- Liste des projets -->
+                <h2 style="margin-top: 2rem;">Projets existants</h2>
+                <div class="projects-list" id="projects-list">
+                    <!-- Les projets seront injectés ici -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal d'édition -->
+    <div class="modal" id="edit-modal">
+        <div class="modal-content">
+            <h2>Modifier le projet</h2>
+            <form class="project-form" id="edit-form">
+                <input type="hidden" id="edit-id">
+                <input type="text" id="edit-title" placeholder="Titre du projet" required>
+                <input type="text" id="edit-type" placeholder="Type (SLAM / Stage / Personnel)" required>
+                <textarea id="edit-description" placeholder="Description du projet" required></textarea>
+                <textarea id="edit-competences" placeholder="Compétences utilisées" required></textarea>
+                
+                <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Compte rendu PDF (optionnel)</label>
+                <div id="current-pdf-display"></div>
+                <input type="file" id="edit-pdf" accept="application/pdf">
+                <p style="font-size: 0.85rem; color: #666; margin-bottom: 1rem;">Laissez vide pour garder le PDF actuel, ou uploadez un nouveau.</p>
+                <textarea id="edit-compte-rendu" placeholder="Compte rendu texte (si pas de PDF)"></textarea>
+                <div class="modal-buttons">
+                    <button type="button" class="btn-cancel" id="cancel-edit">Annuler</button>
+                    <button type="submit" class="btn-save">Enregistrer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const DEFAULT_PASSWORD = 'admin123';
+            const projectsKey = 'portfolio_projects';
+
+            if (sessionStorage.getItem('adminLoggedIn') === 'true') {
+                showAdminPanel();
+            }
+
+            document.getElementById('login-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const password = document.getElementById('password').value;
+                
+                if (password === DEFAULT_PASSWORD) {
+                    sessionStorage.setItem('adminLoggedIn', 'true');
+                    showAdminPanel();
+                    document.getElementById('login-error').style.display = 'none';
+                } else {
+                    document.getElementById('login-error').style.display = 'block';
+                }
+            });
+
+            document.getElementById('logout-btn').addEventListener('click', function() {
+                sessionStorage.removeItem('adminLoggedIn');
+                document.getElementById('admin-panel').classList.remove('active');
+                document.getElementById('login-section').style.display = 'block';
+                document.getElementById('password').value = '';
+            });
+
+            function showAdminPanel() {
+                document.getElementById('login-section').style.display = 'none';
+                document.getElementById('admin-panel').classList.add('active');
+                loadProjects();
+            }
+
+            function loadProjects() {
+                const projects = JSON.parse(localStorage.getItem(projectsKey)) || getDefaultProjects();
+                localStorage.setItem(projectsKey, JSON.stringify(projects));
+                
+                const container = document.getElementById('projects-list');
+                container.innerHTML = '';
+                
+                projects.forEach((project, index) => {
+                    const item = document.createElement('div');
+                    item.className = 'project-item';
+                    item.innerHTML = `
+                        <div class="project-item-info">
+                            <h3>${project.title}</h3>
+                            <p>${project.type}</p>
+                            ${project.compteRenduPdf ? '<span style="color: green;">📄 PDF attaché</span>' : ''}
+                        </div>
+                        <div class="project-item-actions">
+                            <button class="btn-edit" onclick="editProject(${index})">Modifier</button>
+                            <button class="btn-delete" onclick="deleteProject(${index})">Supprimer</button>
+                        </div>
+                    `;
+                    container.appendChild(item);
+                });
+            }
+
+            function readFileAsBase64(file) {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = () => resolve(reader.result);
+                    reader.onerror = reject;
+                    reader.readAsDataURL(file);
+                });
+            }
+
+            document.getElementById('project-form').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const pdfInput = document.getElementById('project-pdf');
+                let compteRenduPdf = null;
+                
+                if (pdfInput.files.length > 0) {
+                    try {
+                        compteRenduPdf = await readFileAsBase64(pdfInput.files[0]);
+                    } catch (err) {
+                        showMessage('Erreur lors du chargement du PDF', 'error');
+                        return;
+                    }
+                }
+                
+                const project = {
+                    title: document.getElementById('project-title').value,
+                    type: document.getElementById('project-type').value,
+                    description: document.getElementById('project-description').value,
+                    competences: document.getElementById('project-competences').value,
+                    compteRendu: document.getElementById('project-compte-rendu').value,
+                    compteRenduPdf: compteRenduPdf
+                };
+                
+                const projects = JSON.parse(localStorage.getItem(projectsKey)) || getDefaultProjects();
+                projects.push(project);
+                localStorage.setItem(projectsKey, JSON.stringify(projects));
+                
+                document.getElementById('project-form').reset();
+                loadProjects();
+                showMessage('Projet ajouté avec succès !', 'success');
+            });
+
+            window.deleteProject = function(index) {
+                if (confirm('Êtes-vous sûr de vouloir supprimer ce projet ?')) {
+                    const projects = JSON.parse(localStorage.getItem(projectsKey));
+                    projects.splice(index, 1);
+                    localStorage.setItem(projectsKey, JSON.stringify(projects));
+                    loadProjects();
+                    showMessage('Projet supprimé', 'success');
+                }
+            };
+
+            window.editProject = async function(index) {
+                const projects = JSON.parse(localStorage.getItem(projectsKey));
+                const project = projects[index];
+                
+                document.getElementById('edit-id').value = index;
+                document.getElementById('edit-title').value = project.title;
+                document.getElementById('edit-type').value = project.type;
+                document.getElementById('edit-description').value = project.description;
+                document.getElementById('edit-competences').value = project.competences;
+                document.getElementById('edit-compte-rendu').value = project.compteRendu || '';
+                
+                const pdfDisplay = document.getElementById('current-pdf-display');
+                if (project.compteRenduPdf) {
+                    pdfDisplay.innerHTML = '<div class="current-file">📄 PDF actuel: <a href="#" onclick="openPdfModal(\'' + project.compteRenduPdf + '\', \'Compte rendu\'); return false;">Voir</a> <span onclick="removePdf(' + index + ')" class="remove-file" style="cursor:pointer; color: red; margin-left: 10px;">[Supprimer]</span></div>';
+                } else {
+                    pdfDisplay.innerHTML = '';
+                }
+                
+                document.getElementById('edit-modal').classList.add('active');
+            };
+
+            window.removePdf = function(index) {
+                if (confirm('Supprimer le PDF attaché ?')) {
+                    const projects = JSON.parse(localStorage.getItem(projectsKey));
+                    projects[index].compteRenduPdf = null;
+                    localStorage.setItem(projectsKey, JSON.stringify(projects));
+                    document.getElementById('current-pdf-display').innerHTML = '<div class="current-file" style="background: #fadbd8;">PDF supprimé</div>';
+                    loadProjects();
+                    showMessage('PDF supprimé', 'success');
+                }
+            };
+
+            document.getElementById('cancel-edit').addEventListener('click', function() {
+                document.getElementById('edit-modal').classList.remove('active');
+            });
+
+            document.getElementById('edit-form').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const index = parseInt(document.getElementById('edit-id').value);
+                const projects = JSON.parse(localStorage.getItem(projectsKey));
+                
+                const pdfInput = document.getElementById('edit-pdf');
+                let compteRenduPdf = projects[index].compteRenduPdf;
+                
+                if (pdfInput.files.length > 0) {
+                    try {
+                        compteRenduPdf = await readFileAsBase64(pdfInput.files[0]);
+                    } catch (err) {
+                        showMessage('Erreur lors du chargement du PDF', 'error');
+                        return;
+                    }
+                }
+                
+                projects[index] = {
+                    title: document.getElementById('edit-title').value,
+                    type: document.getElementById('edit-type').value,
+                    description: document.getElementById('edit-description').value,
+                    competences: document.getElementById('edit-competences').value,
+                    compteRendu: document.getElementById('edit-compte-rendu').value,
+                    compteRenduPdf: compteRenduPdf
+                };
+                
+                localStorage.setItem(projectsKey, JSON.stringify(projects));
+                document.getElementById('edit-modal').classList.remove('active');
+                loadProjects();
+                showMessage('Projet modifié avec succès !', 'success');
+            });
+
+            function showMessage(text, type) {
+                const container = document.getElementById('message-container');
+                container.innerHTML = `<div class="${type}-message">${text}</div>`;
+                setTimeout(() => {
+                    container.innerHTML = '';
+                }, 3000);
+            }
+        });
+    </script>
+
+    <!-- Modal pour afficher les PDF -->
+    <div class="pdf-modal" id="pdf-modal">
+        <div class="pdf-modal-content">
+            <span class="pdf-modal-close" onclick="closePdfModal()">&times;</span>
+            <h2 id="pdf-modal-title">Document</h2>
+            <iframe id="pdf-frame" src=""></iframe>
+        </div>
+    </div>
+</body>
+</html>

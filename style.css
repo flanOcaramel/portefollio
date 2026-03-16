@@ -1,0 +1,725 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #3498db;
+    --accent-color: #e74c3c;
+    --text-color: #333;
+    --light-bg: #f5f5f5;
+    --white: #fff;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--light-bg);
+}
+
+/* Header & Navigation */
+header {
+    background-color: var(--primary-color);
+    color: var(--white);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    box-shadow: var(--shadow);
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+}
+
+.nav-links a {
+    color: var(--white);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: var(--secondary-color);
+}
+
+.admin-link {
+    background-color: var(--accent-color);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+}
+
+.admin-link:hover {
+    background-color: #c0392b;
+}
+
+/* Main Content */
+main {
+    margin-top: 80px;
+    padding: 2rem;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.section {
+    background-color: var(--white);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+}
+
+.section h1 {
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 3px solid var(--secondary-color);
+}
+
+/* CV Section */
+.cv-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.cv-section {
+    padding: 1.5rem;
+    background-color: var(--light-bg);
+    border-radius: 8px;
+}
+
+.cv-section h2 {
+    color: var(--secondary-color);
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+}
+
+.info-personnelles p {
+    margin: 0.5rem 0;
+}
+
+.formation {
+    margin-bottom: 1rem;
+    padding: 1rem;
+    background-color: var(--white);
+    border-left: 4px solid var(--secondary-color);
+}
+
+.formation .annee {
+    color: var(--accent-color);
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.competences {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.competence-category {
+    background-color: var(--white);
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+.competence-category h3 {
+    color: var(--primary-color);
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.competence-category ul {
+    list-style: none;
+}
+
+.competence-category li {
+    padding: 0.3rem 0;
+    font-size: 0.9rem;
+}
+
+.competence-category li::before {
+    content: "✓ ";
+    color: var(--secondary-color);
+}
+
+.soft-skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    list-style: none;
+}
+
+.soft-skills li {
+    background-color: var(--secondary-color);
+    color: var(--white);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+}
+
+/* Expériences Section */
+.experiences-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.experience-card {
+    padding: 1.5rem;
+    background-color: var(--light-bg);
+    border-radius: 8px;
+    border-left: 4px solid var(--secondary-color);
+}
+
+.experience-card h2 {
+    color: var(--primary-color);
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.experience-card .entreprise {
+    color: var(--secondary-color);
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.experience-card .periode {
+    color: var(--accent-color);
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+}
+
+.experience-card .description {
+    line-height: 1.8;
+}
+
+/* Réalisations Section */
+.realisations-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.realisation-card {
+    background-color: var(--light-bg);
+    padding: 1.5rem;
+    border-radius: 8px;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.realisation-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow);
+}
+
+.realisation-card h3 {
+    color: var(--primary-color);
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.realisation-card .projet-type {
+    color: var(--secondary-color);
+    font-size: 0.85rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.realisation-card .projet-description {
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+    line-height: 1.6;
+}
+
+.realisation-card .competences-utilisees {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 1rem;
+}
+
+.realisation-card .compte-rendu {
+    background-color: var(--white);
+    padding: 1rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    border-left: 3px solid var(--accent-color);
+}
+
+.realisation-card .compte-rendu h4 {
+    color: var(--accent-color);
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+
+/* Veille Section */
+.veille-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.veille-intro {
+    padding: 1.5rem;
+    background-color: var(--light-bg);
+    border-radius: 8px;
+}
+
+.veille-intro h2 {
+    color: var(--secondary-color);
+    margin-bottom: 1rem;
+}
+
+.veille-sources {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.source-category {
+    background-color: var(--light-bg);
+    padding: 1.5rem;
+    border-radius: 8px;
+}
+
+.source-category h3 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    font-size: 1rem;
+}
+
+.source-category ul {
+    list-style: none;
+}
+
+.source-category li {
+    margin: 0.5rem 0;
+}
+
+.source-category a {
+    color: var(--secondary-color);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.source-category a:hover {
+    color: var(--accent-color);
+}
+
+.veille-themes {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.theme {
+    padding: 1.5rem;
+    background-color: var(--light-bg);
+    border-radius: 8px;
+    border-left: 4px solid var(--secondary-color);
+}
+
+.theme h3 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+/* Footer */
+footer {
+    background-color: var(--primary-color);
+    color: var(--white);
+    text-align: center;
+    padding: 1.5rem;
+    margin-top: 2rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .nav-links {
+        gap: 1rem;
+        font-size: 0.9rem;
+    }
+    
+    .competences {
+        grid-template-columns: 1fr;
+    }
+    
+    .realisations-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .veille-sources {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Admin Page Styles */
+.admin-container {
+    max-width: 800px;
+    margin: 100px auto 2rem;
+    padding: 2rem;
+    background-color: var(--white);
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.login-form input {
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.login-form button {
+    padding: 0.8rem;
+    background-color: var(--secondary-color);
+    color: var(--white);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+}
+
+.login-form button:hover {
+    background-color: #2980b9;
+}
+
+.admin-panel {
+    display: none;
+}
+
+.admin-panel.active {
+    display: block;
+}
+
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--secondary-color);
+}
+
+.admin-header h1 {
+    color: var(--primary-color);
+}
+
+.btn-logout {
+    padding: 0.5rem 1rem;
+    background-color: var(--accent-color);
+    color: var(--white);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.project-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background-color: var(--light-bg);
+    border-radius: 8px;
+}
+
+.project-form input,
+.project-form textarea {
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-family: inherit;
+}
+
+.project-form textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.project-form button {
+    padding: 0.8rem;
+    background-color: var(--secondary-color);
+    color: var(--white);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.projects-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.project-item {
+    padding: 1.5rem;
+    background-color: var(--light-bg);
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.project-item-info h3 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.project-item-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.project-item-actions button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.btn-edit {
+    background-color: var(--secondary-color);
+    color: var(--white);
+}
+
+.btn-delete {
+    background-color: var(--accent-color);
+    color: var(--white);
+}
+
+.error-message {
+    color: var(--accent-color);
+    padding: 1rem;
+    background-color: #fadbd8;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+}
+
+.success-message {
+    color: #27ae60;
+    padding: 1rem;
+    background-color: #d5f4e6;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 2000;
+}
+
+.modal.active {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: var(--white);
+    padding: 2rem;
+    border-radius: 8px;
+    max-width: 600px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal-content h2 {
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+}
+
+.modal-content .project-form {
+    background-color: var(--white);
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.modal-buttons button {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.btn-cancel {
+    background-color: #95a5a6;
+    color: var(--white);
+}
+
+.btn-save {
+    background-color: var(--secondary-color);
+    color: var(--white);
+}
+
+/* CV Download Link */
+.cv-download {
+    margin-bottom: 1.5rem;
+}
+
+.pdf-link {
+    display: inline-block;
+    padding: 0.8rem 1.5rem;
+    background-color: var(--secondary-color);
+    color: var(--white);
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 500;
+    transition: background-color 0.3s;
+    cursor: pointer;
+}
+
+.pdf-link:hover {
+    background-color: #2980b9;
+}
+
+/* PDF Modal */
+.pdf-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 3000;
+}
+
+.pdf-modal.active {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pdf-modal-content {
+    background-color: var(--white);
+    width: 90%;
+    max-width: 900px;
+    height: 90vh;
+    border-radius: 8px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.pdf-modal-close {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 2rem;
+    cursor: pointer;
+    color: var(--primary-color);
+    z-index: 10;
+}
+
+.pdf-modal-close:hover {
+    color: var(--accent-color);
+}
+
+.pdf-modal-content h2 {
+    padding: 1rem;
+    margin: 0;
+    background-color: var(--light-bg);
+    border-bottom: 1px solid #ddd;
+    border-radius: 8px 8px 0 0;
+}
+
+#pdf-frame {
+    flex: 1;
+    width: 100%;
+    border: none;
+    border-radius: 0 0 8px 8px;
+}
+
+/* Compte rendu link */
+.compte-rendu-link {
+    display: inline-block;
+    margin-top: 0.5rem;
+    padding: 0.5rem 1rem;
+    background-color: var(--accent-color);
+    color: var(--white);
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.compte-rendu-link:hover {
+    background-color: #c0392b;
+}
+
+/* Upload file styling */
+.file-upload {
+    border: 2px dashed #ddd;
+    padding: 1rem;
+    text-align: center;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+}
+
+.file-upload:hover {
+    border-color: var(--secondary-color);
+}
+
+.current-file {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    background-color: #d5f4e6;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.current-file .remove-file {
+    color: var(--accent-color);
+    cursor: pointer;
+    font-weight: bold;
+}

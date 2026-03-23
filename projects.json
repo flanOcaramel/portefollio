@@ -1,0 +1,50 @@
+[
+  {
+    "title": "Challenge2eVR",
+    "type": "SLAM",
+    "description": "Un jeu en VR avec un back-office, créé dans le cadre du challenge de 2e année.",
+    "competences": "VR, API REST, Back-office",
+    "compteRendu": "",
+    "compteRenduPdf": "Challenge2eVR.pdf"
+  },
+  {
+    "title": "GPSTablettes",
+    "type": "Stage",
+    "description": "Une application de géolocalisation d'un arduino, pour localiser les chariots de tablettes, réalisée pendant mon stage de 2e année.",
+    "competences": "Arduino, GPS, IoT, Python, Base de données",
+    "compteRendu": "",
+    "compteRenduPdf": "GPSTablettes.pdf"
+  },
+  {
+    "title": "AgoraBO",
+    "type": "SLAM",
+    "description": "Un projet en Symfony mené à bien tout au long de l'année de 2e année.",
+    "competences": "Symfony, PHP, Twig, Doctrine, MySQL",
+    "compteRendu": "",
+    "compteRenduPdf": "AgoraBO.pdf"
+  },
+  {
+    "title": "--CheeseCards--",
+    "type": "SLAM",
+    "description": "Un projet de jeu de cartes à collectionné réalisé en groupe de 2 EN PREMIÈRE ANNÉE.",
+    "competences": "HTML, CSS, JavaScript, PHP, MySQL",
+    "compteRendu": "",
+    "compteRenduPdf": "--CheeseCards--.pdf"
+  },
+  {
+    "title": "Smaine2challenge1",
+    "type": "SLAM",
+    "description": "Projet réalisé en groupe de 4 dans le cadre du challenge de première année.",
+    "competences": "Développement Web, Travail d'équipe, Gestion de projet",
+    "compteRendu": "",
+    "compteRenduPdf": "Smaine2challenge1.pdf"
+  },
+  {
+    "title": "ThunderViewer",
+    "type": "Personnel",
+    "description": "GUI Python open source permettant de stream et de récupérer les informations des parties sur le jeu War Thunder en temps réel.",
+    "competences": "Python, PyQt, API, Open Source",
+    "compteRendu": "",
+    "compteRenduPdf": "ThunderViewer.pdf"
+  }
+]
